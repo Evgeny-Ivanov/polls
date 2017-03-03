@@ -4,6 +4,7 @@ from .models import Question, Choice
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
+from .forms import UserForm
 
 class DetailView(generic.DetailView):
     model = Question
@@ -27,6 +28,16 @@ class IndexView(generic.ListView):
 def results(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/results.html', {'question': question})
+
+def authorization(request):
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            return HttpResponse("Все ок")
+    else:
+        form = UserForm()
+
+    return render(request, 'polls/authorization.html', {'form': form})
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
