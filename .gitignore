@@ -1,5 +1,5 @@
 env/
 .idea/
 src/polls/__pycache__/
-src/mysite/__pycache__/
 src/polls/migrations/
+src/mysite/__pycache__/
