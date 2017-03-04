@@ -5,6 +5,8 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 from .forms import UserForm
+from rest_framework import generics, permissions
+from .serializers import QuestionSerializer, ChoiceSerializer
 
 class DetailView(generic.DetailView):
     model = Question
@@ -53,3 +55,11 @@ def vote(request, question_id):
         choice.save()
 
     return HttpResponseRedirect(reverse('polls:results', args=(question_id,)))
+
+class QuestionDetail(generics.RetrieveAPIView):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+
+class ChoiceDetail(generics.RetrieveAPIView):
+    queryset = Choice.objects.all()
+    serializer_class = ChoiceSerializer
